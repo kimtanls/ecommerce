@@ -1,5 +1,6 @@
 package com.example.Ecommerce.config;
 
+import com.example.Ecommerce.enums.UserRole;
 import jakarta.servlet.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -40,7 +41,8 @@ public class config {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request-> request
                         .requestMatchers("/api/auth/login","/api/auth/register","/api/users/**",
-                                "/api/admin/**").permitAll()
+                                "/api/**").permitAll()
+//                        .requestMatchers("/api/admin/**").hasRole(UserRole.ADMIN.name())
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //ứng dụng không lưu trạng thái người dùng trong session
